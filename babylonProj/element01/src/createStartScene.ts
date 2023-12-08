@@ -3,23 +3,57 @@
 import "@babylonjs/core/Debug/debugLayer";
 import "@babylonjs/inspector";
 import {
-    Scene,
-    ArcRotateCamera,
-    Vector3,
-    HemisphericLight,
-    MeshBuilder,
-    Mesh,
-    Light,
-    Camera,
-    Engine,
+  Scene,
+  ArcRotateCamera,
+  Vector3,
+  HemisphericLight,
+  MeshBuilder,
+  Mesh,
+  Light,
+  Camera,
+  Engine,
+  StandardMaterial,
+  Texture,
+  Animation,
+  EasingFunction,
+  Color3,
+  Space,
+  ShadowGenerator,
+  PointLight,
+  DirectionalLight,
+  CubeTexture,
+  Sprite,
+  SpriteManager,
+  SceneLoader,
+  HandPart,
+  ActionManager,
+  ExecuteCodeAction,
+  AnimationPropertiesOverride,
+  Sound
   } from "@babylonjs/core";
   
   //MIDDLE OF CODE
   function createBox(scene: Scene, px: number, py: number, pz: number, sx: number, sy: number, sz: number) {
     let box = MeshBuilder.CreateBox("box",{size: 1}, scene);
-    //Trying to have box appear in different places
+    //box in different postitions
     box.position = new Vector3(px, py, pz);
     box.scaling = new Vector3(sx, sy, sz);
+    const rotate = new Animation(
+      "rotationAnimation",
+      "rotation.y",
+      30,
+      Animation.ANIMATIONTYPE_FLOAT,
+      Animation.ANIMATIONLOOPMODE_CYCLE,
+    );
+    const rotationKeys = [
+      { frame: 0, value: 0 },
+      { frame: 100, value: 2 * Math.PI },
+    ];
+    rotate.setKeys(rotationKeys);
+  
+  
+    box.animations.push(rotate);
+    scene.beginAnimation(box, 0, 100, true);
 
     //box.position.y = 3; original code to have box be in the centre
     return box;
@@ -38,6 +72,11 @@ import {
       { diameter: 2, segments: 32 },
       scene,
     );
+    //give it some cheeky wee material
+    const material = new StandardMaterial("sphereMaterial", scene);
+    material.diffuseTexture = new Texture("assets/spheretex.jpg", scene);
+    sphere.material = material;
+
     sphere.position.y = 1;
     return sphere;
   }

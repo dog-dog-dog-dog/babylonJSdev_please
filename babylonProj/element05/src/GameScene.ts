@@ -34,7 +34,7 @@ import {
   } from "@babylonjs/core";
   import * as GUI from "@babylonjs/gui";
   import HavokPhysics from "@babylonjs/havok";
-  import { HavokPlugin, PhysicsAggregate, PhysicsShapeType } from "@babylonjs/core";
+  import { HavokPlugin, PhysicsAggregate, PhysicsShapeType, PhysicsImpostor, PhysicsImpostorParameters } from "@babylonjs/core";
 
 //Havok physics initiatisation----------
 let initializedHavok;
